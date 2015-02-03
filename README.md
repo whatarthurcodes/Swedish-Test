@@ -1,2 +1,2 @@
 # Swedish-Test
-Simple Test to learn swedish
+Simple python script to help learn Swedish vocabulary.
