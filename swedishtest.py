@@ -1,38 +1,32 @@
 import sys
 import random 
-
-bank_one = [['bor', 'live'], ['de','they'],['den', 'it'],['det', 'it'],['det ar', 'it is'],['du', 'you'],['fran', 'from'],['gillar', 'like'],['gor', 'do', "does"],['han', 'he'],['heter', 'is called'],['hon', 'she'],['har', 'here'],['horsal', 'lecture hall'],['i', 'in'],['idag', 'today'],['jag', 'I'],['kommer', 'come']]
-# bank_two = [['english', 'swedish'], ['english2','swedish2']]
-
-
+import csv
 
 def swedishtest():
 	
-	word_bank = choose_module()
+	word_bank = select_module()
 	lang = choose_lang()
-	
 	questions(word_bank, lang)
 
 	
-def choose_module():
-	word_bank = False
-	while word_bank is False:
-		module_choice = raw_input('What module do you want to be tested on? ')
-		print module_choice
 
-		if module_choice == '1' or module_choice == 'one':
-			print "You have selected " + module_choice + "\n"
-			return bank_one 
-		
-		# if module_choice == '2' or module_choice == 'two':
-		# 	print "You have selected " + module_choice
-		# 	return bank_two
+def select_module():
+	
+	file_found = False
+	while file_found is False:
+		try:
+			module_choice = raw_input('Enter the file name. ex. module1.csv \n')
+			module = open(module_choice)
+			csv_f = csv.reader(module)
+			file_found = True
+		except Exception: 
+			print ("Cannot Find file ") + module_choice + ("\n")
 
-		else:
-			print "No module exists for " + module_choice
-			print "Please select again."
-			word_bank = False
-
+	word_bank =[]
+	for row in csv_f:
+  		word_bank.append(row)
+  	return word_bank
+			
 def choose_lang():
 	lang = False
 	while lang is False:
@@ -45,13 +39,11 @@ def choose_lang():
 			print ('Please enter 0 for English to Swedish or 1 for Swedish to English \n')
 			lang = False
 			
-
-
-
 def questions(word_bank, lang):
 	answer = 'answer'
 	quit = False
 	number_of_words = len(word_bank)
+	print number_of_words
 	correct_answers = 0
 	number_of_questions =0
 	print ('\nTo quit, enter q or quit')
@@ -63,8 +55,6 @@ def questions(word_bank, lang):
 	if lang == 1:
 		print ('The word is given in English, please type in the Swedish word \n')
 		lang_answer = 0 
-
-
 
 	while quit is False:
 		rand = random.randint(0, number_of_words-1)
@@ -83,7 +73,6 @@ def questions(word_bank, lang):
 		else:
 			print "Wrong! The answer is: " + question[lang_answer] + "\n"
 			number_of_questions = number_of_questions + 1
-
 
 
 swedishtest()
